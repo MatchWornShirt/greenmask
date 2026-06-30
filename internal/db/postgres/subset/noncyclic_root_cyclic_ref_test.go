@@ -38,8 +38,10 @@ func TestNonCyclicRootReferencingCycle(t *testing.T) {
 	)
 
 	// Self edge for Bids (cycle of length 1): Bids.ParentBidId -> Bids.Id.
+	// NON-nullable so it genuinely forces a cycle (a nullable self-loop is now
+	// treated as non-cycle-forming).
 	bidsSelfEdge := NewEdge(
-		1, bidsIdx, true, // self FK is nullable (root bids have no parent)
+		1, bidsIdx, false,
 		NewTableLink(bidsIdx, bids, NewKeysByColumn([]string{"ParentBidId"}), nil),
 		NewTableLink(bidsIdx, bids, NewKeysByColumn([]string{"Id"}), nil),
 	)
