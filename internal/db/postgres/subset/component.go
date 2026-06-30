@@ -125,6 +125,11 @@ func (c *Component) findAllCyclesDfs(v int, visited map[int]bool, recStack map[i
 
 	for _, to := range edges {
 
+		// Nullable self-FK doesn't force a cycle (NULL terminates closure); keep non-nullable self-FKs cyclic.
+		if to.from.idx == to.to.idx && to.isNullable {
+			continue
+		}
+
 		path = append(path, to)
 		if !visited[to.idx] {
 			c.findAllCyclesDfs(to.idx, visited, recStack, path)
