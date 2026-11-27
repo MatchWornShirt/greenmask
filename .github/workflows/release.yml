@@ -11,12 +11,17 @@ jobs:
     uses: ./.github/workflows/tests.yml
 
   build:
+    permissions:
+      contents: write
+      packages: write
     uses: ./.github/workflows/build.yml
-    needs: 
+    needs:
       - tests
     secrets: inherit
 
   docs:
+    permissions:
+      contents: write
     uses: ./.github/workflows/docs.yml
     needs: 
       - build
