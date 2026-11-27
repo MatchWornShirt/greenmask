@@ -1,7 +1,7 @@
 services:
   storage:
     profiles: ["pg13", "pg14", "pg15", "pg16", "pg17", "pg18", "all"]
-    image: minio/minio:latest
+    image: quay.io/minio/minio:latest
     ports:
       - "9000:9000"
       - "9001:9001"
